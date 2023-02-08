@@ -7,7 +7,6 @@ import Header from "./components/Header.vue";
   <header>
     <div class="wrapper">
       <Header msg="Bali" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>

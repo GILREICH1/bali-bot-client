@@ -1,17 +1,15 @@
 <template>
-  <main>
-    <messages-view :messages="messages" />
-    <form @submit.prevent="submitHandler">
-      <n-space vertical>
-        <n-input autofocus type="text" v-model:value="value" round
-          placeholder="Hello">
-          <template #prefix>
-            {{ "👋" }}
-          </template>
-        </n-input>
-      </n-space>
-    </form>
-  </main>
+  <messages-view :messages="messages" />
+  <form class="home-view-input-bar" @submit.prevent="submitHandler">
+    <n-space vertical>
+      <n-input autofocus type="text" v-model:value="value" round
+        placeholder="Hello">
+        <template #prefix>
+          {{ "👋" }}
+        </template>
+      </n-input>
+    </n-space>
+  </form>
 </template>
 
 <script>
@@ -28,7 +26,7 @@ export default {
 
   data() {
     return {
-      messages: ["hello", "test"],
+      messages: [],
     };
   },
 
@@ -55,7 +53,7 @@ export default {
       setTimeout(() => {
         const mockBotMessage = {
           sender: "bot",
-          text: this.messages % 2 === 0 ? "yes" : "ok",
+          text: this.messages.length % 2 === 0 ? "yes" : "ok",
         };
         this.messages = [...this.messages, mockBotMessage];
       }, 800);
@@ -63,3 +61,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.home-view-input-bar {
+  width: 70vw;
+  bottom: 5px;
+  position: fixed;
+}
+</style>
