@@ -40,10 +40,26 @@ export default {
 
   methods: {
     submitHandler() {
-      this.messages = [...this.messages, this.value];
-      this.value = ''
+      if (this.value) {
+        const newMessage = {
+          sender: "user",
+          text: this.value,
+        }
+
+        this.messages = [...this.messages, newMessage];
+        this.value = "";
+        this.getBotMessage();
+      }
+    },
+    async getBotMessage() {
+      setTimeout(() => {
+        const mockBotMessage = {
+          sender: "bot",
+          text: this.messages % 2 === 0 ? "yes" : "ok",
+        };
+        this.messages = [...this.messages, mockBotMessage];
+      }, 800);
     },
   },
-
 };
 </script>
