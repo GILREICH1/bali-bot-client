@@ -1,25 +1,23 @@
 <template>
-  <template :key="i" v-for="(message, i) in messages">
-    <n-card>
-      {{ message }}
-      <template #footer>
-        {{ "footer" }}
-      </template>
-    </n-card>
-  </template>
+  <n-space vertical>
+    <template :key="i" v-for="(message, i) in messages">
+      <n-card>
+        {{ message }}
+      </n-card>
+    </template>
+  </n-space>
 </template>
 
 <script>
-import { NCard } from "naive-ui";
+import { NCard, NSpace } from "naive-ui";
 
 export default {
   components: {
-    NCard
+    NCard,
+    NSpace,
   },
-  data() {
-    return {
-      messages: ["hello", "test"],
-    };
+  props: {
+    messages: Array,
   },
 };
 </script>
