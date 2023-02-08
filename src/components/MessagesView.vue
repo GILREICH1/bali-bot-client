@@ -1,20 +1,20 @@
 <template>
-  <n-space vertical>
+  <div class="messages">
     <template :key="i" v-for="(message, i) in messages">
-      <n-card>
-        {{ message }}
+      <n-card size="small" :bordered="false"
+        :class="`${message.sender} message`">
+        {{ message.text }}
       </n-card>
     </template>
-  </n-space>
+  </div>
 </template>
 
 <script>
-import { NCard, NSpace } from "naive-ui";
+import { NCard } from "naive-ui";
 
 export default {
   components: {
     NCard,
-    NSpace,
   },
   props: {
     messages: Array,
@@ -23,7 +23,23 @@ export default {
 </script>
 
 <style scoped>
-.n-card {
-  max-width: 300px;
+.bot {
+  background-color: green;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.user {
+  align-self: end;
+  background-color: bisque;
+}
+
+.message {
+  min-width: 50px;
+  max-width: 200px;
 }
 </style>
