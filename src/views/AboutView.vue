@@ -5,6 +5,10 @@
 </template>
 
 <style>
+.about {
+  top: 10rem;
+}
+
 @media (min-width: 1024px) {
   .about {
     min-height: 100vh;

@@ -30,24 +30,19 @@ export default {
   },
   methods: {
     generateClasses(message, i) {
-      let classNames = ['message', message.sender];
-      if (i === this.messages.length - 1) classNames.push('latestMessage')
-
+      let classNames = ["message", message.sender];
+      if (i === this.messages.length - 1) classNames.push("latestMessage");
       return classNames;
     },
     scrollToElement() {
       const lastestMessage = this.$el.querySelector(".latestMessage");
-      lastestMessage.scrollIntoView({ behavior: 'smooth' })
+      lastestMessage.scrollIntoView({ behavior: "smooth" });
     },
   },
 };
 </script>
 
 <style scoped>
-.latestMessage {
-  background-color: rgb(0, 0, 0) !important;
-}
-
 .bot {
   background-color: rgb(200, 255, 200);
 }
