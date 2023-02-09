@@ -1,17 +1,20 @@
 <template>
-  <messages-view class="messages-view"
-    :messageLoading="messageLoading" :messages="messages" />
-  <form class="home-view-input-bar" @submit.prevent="submitHandler">
-    <n-space vertical>
-      <n-input :on-focus="test" :disabled="inputDisabled" type="text"
-        v-model:value="inputValue" round placeholder="Hello"
-        ref="inputInstRef">
-        <template #prefix>
-          {{ "👋" }}
-        </template>
-      </n-input>
-    </n-space>
-  </form>
+  <div class="wrapper">
+    <div class="messages-view-overlay"></div>
+    <messages-view class="messages-view"
+      :messageLoading="messageLoading" :messages="messages" />
+    <form class="home-view-input-bar" @submit.prevent="submitHandler">
+      <n-space vertical>
+        <n-input :disabled="inputDisabled" type="text"
+          v-model:value="inputValue" round placeholder="Hello"
+          ref="inputInstRef">
+          <template #prefix>
+            {{ "👋" }}
+          </template>
+        </n-input>
+      </n-space>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -41,16 +44,13 @@ export default {
       inputInstRef,
       inputValue: ref(null),
       handleFocus() {
-        console.log({ inputInstRef });
+        console.log(inputInstRef.value?.focus);
         inputInstRef.value?.focus();
       },
     };
   },
 
   methods: {
-    test() {
-      console.log('hello')
-    },
     submitHandler() {
       if (this.inputValue) {
         const newMessage = {
@@ -60,7 +60,9 @@ export default {
 
         this.messages = [...this.messages, newMessage];
         this.inputValue = "";
-        this.getBotMessage();
+        setTimeout(() => {
+          this.getBotMessage();
+        }, 400);
       }
     },
     async getBotMessage() {
@@ -75,13 +77,17 @@ export default {
         this.messageLoading = false;
         this.inputDisabled = false;
         this.handleFocus();
-      }, 200);
+      }, 800);
     },
   },
 };
 </script>
 
 <style>
+.wrapper {
+  position: relative;
+}
+
 .messages-view {
   top: 10rem;
   height: 70vh;
@@ -91,6 +97,15 @@ export default {
   overflow: scroll;
 }
 
+.messages-view-overlay {
+  position: absolute;
+  height: 70vh;
+  top: 10rem;
+  background: linear-gradient(rgb(255, 255, 255), rgba(255, 255, 255, 0));
+  z-index: 100;
+  width: 100%;
+  overflow: hidden;
+}
 
 .home-view-input-bar {
   width: 70vw;
