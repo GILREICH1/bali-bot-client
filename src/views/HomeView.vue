@@ -3,9 +3,9 @@
     :messageLoading="messageLoading" :messages="messages" />
   <form class="home-view-input-bar" @submit.prevent="submitHandler">
     <n-space vertical>
-      <n-input :passively-activated="true" :disabled="inputDisabled"
-        autofocus type="text" v-model:value="value" round
-        placeholder="Hello" ref="input">
+      <n-input :on-focus="test" :disabled="inputDisabled" type="text"
+        v-model:value="inputValue" round placeholder="Hello"
+        ref="inputInstRef">
         <template #prefix>
           {{ "👋" }}
         </template>
@@ -36,21 +36,30 @@ export default {
   },
 
   setup() {
+    const inputInstRef = ref(null);
     return {
-      value: ref(null),
+      inputInstRef,
+      inputValue: ref(null),
+      handleFocus() {
+        console.log({ inputInstRef });
+        inputInstRef.value?.focus();
+      },
     };
   },
 
   methods: {
+    test() {
+      console.log('hello')
+    },
     submitHandler() {
-      if (this.value) {
+      if (this.inputValue) {
         const newMessage = {
           sender: "user",
-          text: this.value,
+          text: this.inputValue,
         };
 
         this.messages = [...this.messages, newMessage];
-        this.value = "";
+        this.inputValue = "";
         this.getBotMessage();
       }
     },
@@ -65,7 +74,7 @@ export default {
         this.messages = [...this.messages, mockBotMessage];
         this.messageLoading = false;
         this.inputDisabled = false;
-        this.$refs.input.focus();
+        this.handleFocus();
       }, 200);
     },
   },
