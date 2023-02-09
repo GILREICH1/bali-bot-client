@@ -1,46 +1,64 @@
 <template>
-  <div class="messages">
+  <div>
     <template :key="i" v-for="(message, i) in messages">
       <n-card size="small" :bordered="false"
-        :class="`${message.sender} message`">
-        {{ message.text }}
-      </n-card>
+        :class="generateClasses(message, i)">{{
+          message.text
+        }}</n-card>
     </template>
+    <n-card v-if="messageLoading" size="small" :bordered="false"
+      class="message">
+      <n-skeleton :repeat="2" text width="60%" />
+    </n-card>
   </div>
 </template>
 
 <script>
-import { NCard } from "naive-ui";
+import { NCard, NSkeleton } from "naive-ui";
 
 export default {
   components: {
     NCard,
+    NSkeleton,
   },
   props: {
     messages: Array,
+    messageLoading: Boolean,
+  },
+  updated() {
+    this.scrollToElement();
+  },
+  methods: {
+    generateClasses(message, i) {
+      let classNames = ['message', message.sender];
+      if (i === this.messages.length - 1) classNames.push('latestMessage')
+
+      return classNames;
+    },
+    scrollToElement() {
+      const lastestMessage = this.$el.querySelector(".latestMessage");
+      lastestMessage.scrollIntoView({ behavior: 'smooth' })
+    },
   },
 };
 </script>
 
 <style scoped>
-.bot {
-  background-color: green;
+.latestMessage {
+  background-color: rgb(0, 0, 0) !important;
 }
 
-.messages {
-  top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.bot {
+  background-color: rgb(200, 255, 200);
 }
 
 .user {
   align-self: end;
-  background-color: bisque;
+  background-color: rgb(150, 255, 200);
 }
 
 .message {
-  min-width: 50px;
+  min-width: 20px;
   max-width: 200px;
 }
 </style>
